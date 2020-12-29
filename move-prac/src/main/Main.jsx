@@ -7,6 +7,7 @@ const Main = () => {
   const [rotateSecond, setRotateSecond] = useState(0); //1초재생인지 3초재생인지 상태값(0일때는 애니메이션 없음)
   const [recordInside, isRecordInside] = useState(false); //레코드판을 넣는 애니메이션 트리거
   const [activeIndex, setActiveIndex] = useState(0); //현재 선택된 레코드판 index넘버
+  const [answer, setAnswer] = useState(); //정답 text state
 
   //activeIndex를 주시하며 바뀔때마다 레코드판 넣는 애니메이션과 버튼명을 초기화해줌
   useEffect(() => {
@@ -20,6 +21,7 @@ const Main = () => {
     if (buttonText === '정답보기') {
       isRecordInside(true);
       setButtonText('다음문제');
+      setAnswer('Dumb Dumb');
     } else {
       //버튼 텍스트가 '다음문제'일때 선택된 레코드를 1증가하여 다음 레코드를 불러옴
       setActiveIndex(activeIndex + 1);
@@ -65,6 +67,7 @@ const Main = () => {
             return (
               <SwiperContainer key={index} activeIndex={activeIndex} thisIndex={index}>
                 <CaseImg src='assets/images/case.png' />
+                <AnswerText>{answer ?? '정답은?'}</AnswerText>
                 {index === activeIndex && (
                   <RecordImg
                     src={item.recordImg}
@@ -174,6 +177,13 @@ const BackgroundImg = styled.img`
   width: 100%;
 `;
 
+const AnswerText = styled.p`
+  font-size: 24px;
+  position: absolute;
+  margin-left: 50%;
+  z-index: 11;
+`;
+
 const RecordImg = styled.img`
   object-fit: contain;
   z-index: 1;
@@ -204,6 +214,8 @@ const SwiperContainer = styled.div`
   display: flex;
   height: 100%;
   position: absolute;
+  align-items: center;
+  justify-content: center;
   animation-fill-mode: forwards;
   ${({ activeIndex, thisIndex }) => {
     // 선택된 index와 각요소의 index를 비교해서 애니메이션과 위치를 처리해줌
