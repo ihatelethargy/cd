@@ -13,6 +13,7 @@ const Main = () => {
   useEffect(() => {
     isRecordInside(false);
     setButtonText('정답보기');
+    setAnswer(undefined);
   }, [activeIndex]);
 
   //다음문제 버튼 이벤트 정의
@@ -67,14 +68,16 @@ const Main = () => {
             return (
               <SwiperContainer key={index} activeIndex={activeIndex} thisIndex={index}>
                 <CaseImg src='assets/images/case.png' />
-                <AnswerText>{answer ?? '정답은?'}</AnswerText>
                 {index === activeIndex && (
-                  <RecordImg
-                    src={item.recordImg}
-                    rotateSecond={rotateSecond}
-                    onAnimationEnd={() => setRotateSecond(0)} // 해당요소의 애니메이션이 종료됐을때 레코드판 돌리는 재생시간을 다시 0초로 초기화
-                    inside={recordInside} //레코드가 들어가는 애니메이션을위한 트리거 변수
-                  />
+                  <>
+                    <AnswerText>{answer ?? '정답은?'}</AnswerText>
+                    <RecordImg
+                      src={item.recordImg}
+                      rotateSecond={rotateSecond}
+                      onAnimationEnd={() => setRotateSecond(0)} // 해당요소의 애니메이션이 종료됐을때 레코드판 돌리는 재생시간을 다시 0초로 초기화
+                      inside={recordInside} //레코드가 들어가는 애니메이션을위한 트리거 변수
+                    />
+                  </>
                 )}
               </SwiperContainer>
             );
